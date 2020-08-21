@@ -5,7 +5,9 @@
 <img src="https://raw.githubusercontent.com/lrenc/FoolNet/master/foolnet.png" width="50%">
 
 ```javascript
-function fn(x1, x2) {
+function fn() {
+  let x1 = Math.random();
+  let x2 = Math.random();
   let y = 0;
   if (x1 > 0.5 && x2 > 0.5) {
     y = 1;
@@ -16,4 +18,4 @@ function fn(x1, x2) {
 }
 ```
 
-<img src="https://raw.githubusercontent.com/lrenc/FoolNet/master/result.png" width="50%">
+<img src="https://raw.githubusercontent.com/lrenc/FoolNet/master/result.png" width="150px">
