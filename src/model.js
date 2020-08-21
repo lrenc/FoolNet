@@ -1,8 +1,12 @@
 
-import { dot, sub, sum, power, last, transpose, div, mul } from './util';
+import Layer from './layer';
+import * as derivate from './derivative';
+import { dot, sub, sum, power, transpose, div, mul, add } from './util';
 
 export default class Network {
   constructor(layers) {
+    const layer = layers[0];
+    layer.init();
     for (let i = 0; i < layers.length - 1; i ++) {
       const curr = layers[i];
       const next = layers[i + 1];
@@ -43,8 +47,14 @@ export default class Network {
     const size = inputs.length;
     let layers = this.layers.slice();
     let p = this.multiPredict(inputs);
-    let dz = sub(p, labels); // 二维数组
     let lastLayer = layers.pop();
+    let activation = lastLayer.activation;
+    let dz;
+    if (activation === 'sigmoid') {
+      dz = sub(p, labels); // 二维数组
+    } else {
+      dz = div(mul(sub(p, labels), add(1, p)), p);
+    }
     p = this.multiPredict(inputs, layers);
     let dw = div(dot(transpose(dz), p), size); // A1
     let db = sum(dz) / size;
@@ -52,8 +62,13 @@ export default class Network {
     dbs.unshift(db);
     while (true) {
       const w = lastLayer.neures.map(neure => neure.weights);
-      dz = mul(dot(dz, w), sub(1, power(p, 2)));
       lastLayer = layers.pop();
+      activation = lastLayer.activation;
+      if (activation === 'sigmoid') {
+        dz = mul(dot(dz, w), sub(p, power(p, 2)));
+      } else {
+        dz = mul(dot(dz, w), sub(1, power(p, 2)));
+      }
       if (layers.length === 0) {
         break;
       }

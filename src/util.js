@@ -38,7 +38,7 @@ export function dot(a, b) {
   return c;
 }
 
-// 二维数组相减
+// 减
 export function sub(a, b) {
   ([a, b] = format(a, b));
   const result = [];
@@ -46,6 +46,18 @@ export function sub(a, b) {
     result[i] = [];
     for (let j = 0; j < a[i].length; j ++) {
       result[i].push(a[i][j] - b[i][j]);
+    }
+  }
+  return result;
+}
+
+export function add(a, b) {
+  ([a, b] = format(a, b));
+  const result = [];
+  for (let i = 0; i < a.length; i ++) {
+    result[i] = [];
+    for (let j = 0; j < a[i].length; j ++) {
+      result[i].push(a[i][j] + b[i][j]);
     }
   }
   return result;
@@ -84,6 +96,7 @@ export function power(arr, n) {
   return result;
 }
 
+// 除
 export function div(a, b) {
   ([a, b] = format(a, b));
   const result = [];
@@ -96,6 +109,7 @@ export function div(a, b) {
   return result;
 }
 
+// 乘
 export function mul(a, b) {
   ([a, b] = format(a, b));
   const result = [];

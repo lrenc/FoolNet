@@ -1,16 +1,17 @@
+import * as active from './activation';
 
 function random() {
   return Math.random() * 2 - 1;
 }
 
 export default class Neure {
-  constructor(length, activation, flag) {
+  constructor(length, activation, isFirstLayer = false) {
     this.length = length;
     this.activation = activation;
-    this.b = flag ? 0 : random();
+    this.b = 0;
     this.weights = [];
     for (let i = 0; i < length; i ++) { // 随机初始化权重
-      const weight = flag ? 1 : random();
+      const weight = isFirstLayer ? 1 : random();
       this.weights.push(weight);
     }
   }
@@ -27,8 +28,9 @@ export default class Neure {
     }
     result += this.b;
     // 激活函数处理
-    if (this.activation) {
-      result = this.activation(result);
+    const fn = this.activation && active[this.activation];
+    if (fn) {
+      result = active[this.activation](result);
     }
     return result;
   }

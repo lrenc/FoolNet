@@ -1,23 +1,17 @@
 import Neure from './neure';
-import * as fn from './activation';
-
-const INPUT_LAYER = 'inputLayer';
 
 export default class Layer {
-
   constructor(params) {
     const { units, activation, type } = params;
     this.units = units;
     this.neures = Array(units).fill(null);
-    this.activation = null;
-    if (fn[activation]) {
-      this.activation = fn[activation];
-    }
-    if (type === INPUT_LAYER) {
-      this.neures = this.neures.map(() => {
-        return new Neure(1, null, true);
-      });
-    }
+    this.activation = activation;
+  }
+
+  init() {
+    this.neures = this.neures.map(() => {
+      return new Neure(1, null, true);
+    });
   }
 
   apply(layer) {
