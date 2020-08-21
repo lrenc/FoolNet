@@ -1,5 +1,5 @@
 import Layer from './layer';
-import Model from './Model';
+import Model from './model';
 import { getTrainData, getTestData } from './data';
 import './index.css';
 
